@@ -12,8 +12,9 @@ namespace Cappario
             Workbook wb = Excel.Workbooks.Open(FilePath);
             Worksheet ws = (Worksheet)wb.Worksheets[1];
             var Range = Excel.Range["B:B"];
-            var RowNumber = Range.Find("1002").Row;
+            var RowNumber = Range.Find("98168").Row;
             Console.WriteLine(Convert.ToString(ws.Cells[RowNumber, 1].Value));
+            Excel.Quit();
         }
 
         //guarda cap jobiste
