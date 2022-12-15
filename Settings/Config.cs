@@ -2,8 +2,11 @@
 {
     public static class Config
     {
-        public static string BackendUrl = "https://dev.cdrs-cat.com/";
-        public static string BackendUsername = "paolo.benci@alias2k.com";
-        public static string BackendPassword = "Asdafasda87@";
+        public static string BackendUrl = "";
+        public static string BackendUsername = "";
+        public static string BackendPassword = "";
+        public static string ApiBaseUrl = "";
+        public static string ClientId = "";
+        public static string ClientSecret = "";
     }
 }

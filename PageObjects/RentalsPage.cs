@@ -1,12 +1,11 @@
 ﻿using OpenQA.Selenium;
-using System;
 
 namespace Cappario
 {
     public class RentalsPage : BackendMenu
     {
-        private WebElements StartDateFromField => new(Driver, By.Id($"advSearch_tab_3_date_start_dal"));
-        private string StartFromDate => DateTime.Now.AddDays(-3).ToShortDateString();
+        private WebElements KeywordSearchField => new(Driver, By.Id($"advSearch_tab_3_key"));
+        private WebElements ApplyFiltersButton => new(Driver, By.CssSelector($"#crud_filter_form_tab_3 > div.crud_search_action.p-b-sm.hidden-xs > div > div > div.col-lg-2.hidden-xs > div > button"));
 
         public RentalsPage(IWebDriver Driver) : base(Driver)
         {
@@ -22,10 +21,10 @@ namespace Cappario
             WaitForOverlayToDisappear();
         }
 
-        public void SetStartDateFrom()
+        public void SearchContractByCode(string ContractCode)
         {
-            Interaction.Click(StartDateFromField.Element);
-            ((IJavaScriptExecutor)Driver).ExecuteScript($"document.getElementsByName('advSearch_tab_3[date_start_dal]').item(0).value = '{StartFromDate}';");
+            Interaction.Write(KeywordSearchField.Element, ContractCode);
+            Interaction.Click(ApplyFiltersButton.Element);
         }
     }
 }
