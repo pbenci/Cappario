@@ -40,7 +40,7 @@ namespace Cappario
                 }
                 catch (NoSuchElementException)
                 {
-                    if (retryCounter < 5)
+                    if (retryCounter < 10)
                     {
                         retryCounter++;
                         Thread.Sleep(500);
