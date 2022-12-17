@@ -7,6 +7,7 @@ namespace Cappario
     {
         static void Main(string[] args)
         {
+            ConfigurationsChecker.Check();
             var PostAuthRequest = new PostAuthRequest();
             PostAuthRequest.GetToken();
             var GetIntegrationContractsRequest = new GetIntegrationContractsRequest(PostAuthRequest.Token);
