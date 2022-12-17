@@ -2,14 +2,15 @@
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 
 namespace Cappario
 {
     public class GetIntegrationContractsRequest
     {
         public string Token { get; private set; }
-        public string EndpointUrl { get; } = Config.ApiBaseUrl + "/integration/contracts";
-        public string FromCreationDate => DateTime.Now.AddDays(-3).ToString(("yyyy-MM-dd 00:00:00"));
+        public string EndpointUrl { get; } = ConfigurationManager.AppSettings.Get("ApiBaseUrl") + "/integration/contracts";
+        public string FromCreationDate => DateTime.Now.AddDays(double.Parse(ConfigurationManager.AppSettings.Get("NumberOfDaysInThePast"))).ToString(("yyyy-MM-dd 00:00:00"));
         public dynamic DeserializedJson { get; private set; }
         public List<string> ContractsToCheckList { get; private set; } = new List<string>();
 

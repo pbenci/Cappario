@@ -1,5 +1,5 @@
 ﻿using OpenQA.Selenium;
-using System;
+using System.Configuration;
 
 namespace Cappario
 {
@@ -18,13 +18,13 @@ namespace Cappario
 
         public void GoToUrl()
         {
-            Driver.Navigate().GoToUrl(Config.BackendUrl);
+            Driver.Navigate().GoToUrl(ConfigurationManager.AppSettings.Get("BackendUrl"));
         }
 
         public void Login()
         {
-            Interaction.Write(LoginEmailField.Element, Config.BackendUsername);
-            Interaction.Write(LoginPasswordField.Element, Config.BackendPassword);
+            Interaction.Write(LoginEmailField.Element, ConfigurationManager.AppSettings.Get("BackendUsername"));
+            Interaction.Write(LoginPasswordField.Element, ConfigurationManager.AppSettings.Get("BackendPassword"));
             Interaction.Click(LoginButton.Element);
         }
     }
