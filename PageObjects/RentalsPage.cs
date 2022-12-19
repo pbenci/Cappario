@@ -4,8 +4,8 @@ namespace Cappario
 {
     public class RentalsPage : BackendMenu
     {
-        private WebElements KeywordSearchField => new(Driver, By.Id($"advSearch_tab_3_key"));
-        private WebElements ApplyFiltersButton => new(Driver, By.CssSelector($"#crud_filter_form_tab_3 > div.crud_search_action.p-b-sm.hidden-xs > div > div > div.col-lg-2.hidden-xs > div > button"));
+        private WebElements KeywordSearchField => new(Driver, By.CssSelector($".crud_search_primary .col-xl-2 .input-group > [type='text']"));
+        private WebElements ApplyFiltersButton => new(Driver, By.CssSelector($".hidden-xs.col-lg-2 .btn"));
 
         public RentalsPage(IWebDriver Driver) : base(Driver)
         {
@@ -16,8 +16,15 @@ namespace Cappario
         public void GoTo()
         {
             WaitForOverlayToDisappear();
-            Interaction.Click(RentalMainMenuButton.Element);
-            Interaction.Click(RentalMenuButton.Element);
+            if (RentalMenuButton.Element.Displayed)
+            {
+                Interaction.Click(RentalMenuButton.Element);
+            }
+            else
+            {
+                Interaction.Click(RentalMainMenuButton.Element);
+                Interaction.Click(RentalMenuButton.Element);
+            }
             WaitForOverlayToDisappear();
         }
 

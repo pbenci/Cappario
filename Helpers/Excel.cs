@@ -5,19 +5,16 @@ namespace Cappario
 {
     public static class Excel
     {
-        public static void ReadFile()
+        public static Application ExcelApp = new Application();
+
+        public static string GetRightBranchFromZipCode(string ZipCode)
         {
             string FilePath = AppDomain.CurrentDomain.BaseDirectory + @"\Cappario.xlsx";
-            Application Excel = new Application();
-            Workbook wb = Excel.Workbooks.Open(FilePath);
+            Workbook wb = ExcelApp.Workbooks.Open(FilePath);
             Worksheet ws = (Worksheet)wb.Worksheets[1];
-            var Range = Excel.Range["B:B"];
-            var RowNumber = Range.Find("98168").Row;
-            Console.WriteLine(Convert.ToString(ws.Cells[RowNumber, 1].Value));
-            Excel.Quit();
+            var Range = ExcelApp.Range["B:B"];
+            var RowNumber = Range.Find(ZipCode).Row;
+            return Convert.ToString(ws.Cells[RowNumber, 1].Value);
         }
-
-        //guarda cap jobiste
-        //controlla branch torni
     }
 }

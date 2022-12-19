@@ -6,7 +6,7 @@ namespace Cappario
 {
     public class PostAuthRequest
     {
-        public string EndpointUrl { get; } = ConfigurationManager.AppSettings.Get("ApiBaseUrl") + "/auth/backend";
+        public string EndpointUrl { get; } = ConfigurationManager.AppSettings.Get("ApiBaseUrl") + "/v5/auth/backend";
         public string Token { get; private set; }
 
         public void GetToken()

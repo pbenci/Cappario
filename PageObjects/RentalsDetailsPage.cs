@@ -1,15 +1,19 @@
 ﻿using OpenQA.Selenium;
-using System;
 
 namespace Cappario
 {
     public class RentalsDetailsPage : BackendMenu
     {
-        private WebElements ContractRow => new(Driver, By.CssSelector($"#table-tab_3 > tbody > tr"));
-        private WebElements GeneralInfoTab => new(Driver, By.CssSelector($"#detail-submenu-tab_4 > div > ul > li:nth-child(7) > a"));
-        private WebElements BranchName => new(Driver, By.CssSelector($"#accordion_tab_4_2 > div > div > div:nth-child(4) > div.m-t-xs.m-b-sm"));
-        private WebElements JobsiteAddress => new(Driver, By.CssSelector($"#accordion_tab_4_4 > div > div > div > div.m-t-xs.m-b-sm > div > div.row.pt-2 > div.col-8 > span"));
-        private WebElements EditGeneralInfoButton => new(Driver, By.CssSelector($"#detail-content-data-tab_4 > div:nth-child(2) > div > div > div > div > div.row.mx-0.sticky-edit > div > div > div:nth-child(2) > a"));
+        private WebElements ContractRow => new(Driver, By.CssSelector($"tbody > tr:nth-of-type(1)"));
+        private WebElements GeneralInfoTab => new(Driver, By.CssSelector($"[data-view='info_view'] > .asset_menu"));
+        private WebElements BranchName => new(Driver, By.CssSelector($".accordion div:nth-of-type(4) > .m-t-xs"));
+        private WebElements JobsiteAddress => new(Driver, By.CssSelector($".pt-2 > .col-8 > span"));
+        private WebElements EditGeneralInfoButton => new(Driver, By.CssSelector($".crud-edit > .fa"));
+        private WebElements ContractCode => new(Driver, By.CssSelector($".font-size-16"));
+        private WebElements FiscalBranchDropdown => new(Driver, By.Id("contract_branch_id_chosen"));
+        private WebElements EditGeneralInfoSaveButton => new(Driver, By.CssSelector(".crud-save"));
+        private WebElements EditGeneralInfoConfirmModalSaveButton => new(Driver, By.CssSelector("[data-action='confirmAndSubmitBehind']"));
+        private WebElements ErrorToast => new(Driver, By.CssSelector("[role='alert']"));
 
         public RentalsDetailsPage(IWebDriver Driver) : base(Driver)
         {
@@ -22,15 +26,27 @@ namespace Cappario
             WaitForOverlayToDisappear();
             Interaction.Click(ContractRow.Element);
             WaitForOverlayToDisappear();
+            Interaction.Click(ContractCode.Element);
             Interaction.Click(GeneralInfoTab.Element);
             WaitForOverlayToDisappear();
-            Console.WriteLine(BranchName.Element.Text);
-            Console.WriteLine(JobsiteAddress.Element.Text);
         }
 
-        public void EditFiscalBranch()
+        public void EditFiscalBranch(string RightFiscalBranch, string Status)
         {
             Interaction.Click(EditGeneralInfoButton.Element);
+            Interaction.Click(FiscalBranchDropdown.Element);
+            WebElements FiscalBranch = new(Driver, By.XPath($"//*[@id='contract_branch_id_chosen']//*[text()='{RightFiscalBranch}']"));
+            Interaction.Click(FiscalBranch.Element);
+            Interaction.Click(EditGeneralInfoSaveButton.Element);
+            try
+            {
+                Wait.ForElementToExist(ErrorToast);
+            }
+            catch (NoSuchElementException)
+            {
+                Interaction.Click(EditGeneralInfoConfirmModalSaveButton.Element);
+                WaitForOverlayToDisappear();
+            }
         }
     }
 }

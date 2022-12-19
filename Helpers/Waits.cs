@@ -9,7 +9,7 @@ namespace Cappario
     {
         public IWait<IWebDriver> Wait { get; private set; }
         public IWebDriver Driver { get; private set; }
-        public int Timer => 120;
+        public int Timer => 480;
 
         public Waits(IWebDriver Driver)
         {

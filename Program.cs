@@ -1,5 +1,4 @@
 ﻿using OpenQA.Selenium;
-using System.Threading;
 
 namespace Cappario
 {
@@ -12,19 +11,23 @@ namespace Cappario
             PostAuthRequest.GetToken();
             var GetIntegrationContractsRequest = new GetIntegrationContractsRequest(PostAuthRequest.Token);
             GetIntegrationContractsRequest.GetContractsToCheck();
+            var GetContractsRequest = new GetContractsRequest(PostAuthRequest.Token, GetIntegrationContractsRequest.ListOfIdOfContractsToCheck);
+            GetContractsRequest.GetCodeOfContractsThatNeedBranchChange();
             IWebDriver Driver = new Browsers().LaunchChrome();
             Driver.Manage().Window.Maximize();
             var LoginPage = new LoginPage(Driver);
             LoginPage.GoToUrl();
             LoginPage.Login();
             var RentalsPage = new RentalsPage(Driver);
-            RentalsPage.GoTo();
-            RentalsPage.SearchContractByCode(GetIntegrationContractsRequest.ContractsToCheckList[0]);
-            var RentalsDetailsPage = new RentalsDetailsPage(Driver);
-            RentalsDetailsPage.GoTo();
-            RentalsDetailsPage.EditFiscalBranch();
-            Excel.ReadFile();
-            Thread.Sleep(5000);
+            foreach (Contract Contract in GetContractsRequest.ListOfCodeOfContractsThatNeedBranchChange)
+            {
+                RentalsPage.GoTo();
+                RentalsPage.SearchContractByCode(Contract.Code);
+                var RentalsDetailsPage = new RentalsDetailsPage(Driver);
+                RentalsDetailsPage.GoTo();
+                RentalsDetailsPage.EditFiscalBranch(Contract.RightFiscalBranch, Contract.Status);
+                RentalsDetailsPage.CloseAllTabs();
+            }
             Driver.Quit();
         }
     }
