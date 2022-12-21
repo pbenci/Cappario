@@ -13,8 +13,16 @@ namespace Cappario
             Workbook wb = ExcelApp.Workbooks.Open(FilePath);
             Worksheet ws = (Worksheet)wb.Worksheets[1];
             var Range = ExcelApp.Range["B:B"];
-            var RowNumber = Range.Find(ZipCode).Row;
-            return Convert.ToString(ws.Cells[RowNumber, 1].Value);
+            try
+            {
+                var RowNumber = Range.Find(ZipCode).Row;
+                return Convert.ToString(ws.Cells[RowNumber, 1].Value);
+            }
+            catch (NullReferenceException)
+            {
+                Results.Log("The ZIP code" + " " + ZipCode + " " + "isn't in the Cappario.xlsx file");
+                return null;
+            }
         }
     }
 }

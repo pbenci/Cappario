@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 
@@ -35,12 +36,16 @@ namespace Cappario
             for (int e = 0; e < contracts; e++)
             {
                 SendRequest(ListOfIdOfContractsToCheck[e]);
+                Contract Contract = new(DeserializedJson["content"]["contract"]["code"].ToString(), Excel.GetRightBranchFromZipCode(DeserializedJson["content"]["contract"]["customer_job_site"]["address_detail"]["postal_code"].ToString()), DeserializedJson["content"]["contract"]["status_code"].ToString());
                 if (Excel.GetRightBranchFromZipCode(DeserializedJson["content"]["contract"]["customer_job_site"]["address_detail"]["postal_code"].ToString()) != DeserializedJson["content"]["contract"]["branch_name"].ToString())
                 {
-                    Contract Contract = new(DeserializedJson["content"]["contract"]["code"].ToString(), Excel.GetRightBranchFromZipCode(DeserializedJson["content"]["contract"]["customer_job_site"]["address_detail"]["postal_code"].ToString()), DeserializedJson["content"]["contract"]["status_code"].ToString());
-                    ListOfCodeOfContractsThatNeedBranchChange.Add(Contract);
+                    if (Contract.RightFiscalBranch != null)
+                    {
+                        ListOfCodeOfContractsThatNeedBranchChange.Add(Contract);
+                    }
                 }
                 Excel.ExcelApp.Quit();
+                Console.WriteLine("Checked contract " + Contract.Code);
             }
             return ListOfCodeOfContractsThatNeedBranchChange;
         }

@@ -25,7 +25,7 @@ namespace Cappario
                 RentalsPage.SearchContractByCode(Contract.Code);
                 var RentalsDetailsPage = new RentalsDetailsPage(Driver);
                 RentalsDetailsPage.GoTo();
-                RentalsDetailsPage.EditFiscalBranch(Contract.RightFiscalBranch, Contract.Status);
+                RentalsDetailsPage.EditFiscalBranch(Contract.Code, Contract.RightFiscalBranch);
                 RentalsDetailsPage.CloseAllTabs();
             }
             Driver.Quit();

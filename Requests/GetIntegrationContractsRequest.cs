@@ -36,7 +36,7 @@ namespace Cappario
             for (int e = 0; e < contracts; e++)
             {
                 ListOfIdOfContractsToCheck.Add(Convert.ToString(DeserializedJson["contracts"][e]["id"]));
-                Console.WriteLine("Added " + DeserializedJson["contracts"][e]["id"] + " to the list");
+                Console.WriteLine("Added contract " + DeserializedJson["contracts"][e]["code"] + " to the list of contracts that must be checked");
             }
             return ListOfIdOfContractsToCheck;
         }

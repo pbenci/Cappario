@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using System;
 
 namespace Cappario
 {
@@ -6,8 +7,6 @@ namespace Cappario
     {
         private WebElements ContractRow => new(Driver, By.CssSelector($"tbody > tr:nth-of-type(1)"));
         private WebElements GeneralInfoTab => new(Driver, By.CssSelector($"[data-view='info_view'] > .asset_menu"));
-        private WebElements BranchName => new(Driver, By.CssSelector($".accordion div:nth-of-type(4) > .m-t-xs"));
-        private WebElements JobsiteAddress => new(Driver, By.CssSelector($".pt-2 > .col-8 > span"));
         private WebElements EditGeneralInfoButton => new(Driver, By.CssSelector($".crud-edit > .fa"));
         private WebElements ContractCode => new(Driver, By.CssSelector($".font-size-16"));
         private WebElements FiscalBranchDropdown => new(Driver, By.Id("contract_branch_id_chosen"));
@@ -31,7 +30,7 @@ namespace Cappario
             WaitForOverlayToDisappear();
         }
 
-        public void EditFiscalBranch(string RightFiscalBranch, string Status)
+        public void EditFiscalBranch(string ContractCode, string RightFiscalBranch)
         {
             Interaction.Click(EditGeneralInfoButton.Element);
             Interaction.Click(FiscalBranchDropdown.Element);
@@ -41,11 +40,16 @@ namespace Cappario
             try
             {
                 Wait.ForElementToExist(ErrorToast);
+                Console.WriteLine(ContractCode + " " + "fiscal branch couldn't be edited");
+                Results.Log(ContractCode + " " + "fiscal branch couldn't be edited");
             }
             catch (NoSuchElementException)
             {
                 Interaction.Click(EditGeneralInfoConfirmModalSaveButton.Element);
                 WaitForOverlayToDisappear();
+                Console.WriteLine(ContractCode + " " + "fiscal branch edited successfully");
+
+                Results.Log(ContractCode + " " + "fiscal branch edited successfully");
             }
         }
     }
