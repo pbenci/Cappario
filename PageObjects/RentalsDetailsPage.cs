@@ -37,6 +37,7 @@ namespace Cappario
             WebElements FiscalBranch = new(Driver, By.XPath($"//*[@id='contract_branch_id_chosen']//*[text()='{RightFiscalBranch}']"));
             Interaction.Click(FiscalBranch.Element);
             Interaction.Click(EditGeneralInfoSaveButton.Element);
+            WaitForOverlayToDisappear();
             try
             {
                 Wait.ForElementToExist(ErrorToast);
@@ -48,7 +49,6 @@ namespace Cappario
                 Interaction.Click(EditGeneralInfoConfirmModalSaveButton.Element);
                 WaitForOverlayToDisappear();
                 Console.WriteLine(ContractCode + " " + "fiscal branch edited successfully");
-
                 Results.Log(ContractCode + " " + "fiscal branch edited successfully");
             }
         }
