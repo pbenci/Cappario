@@ -47,7 +47,6 @@ namespace Cappario
             catch (NoSuchElementException)
             {
                 Interaction.Click(EditGeneralInfoConfirmModalSaveButton.Element);
-                WaitForOverlayToDisappear();
                 Console.WriteLine(ContractCode + " " + "fiscal branch edited successfully");
                 Results.Log(ContractCode + " " + "fiscal branch edited successfully");
             }
