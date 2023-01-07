@@ -33,7 +33,6 @@ namespace Cappario
         public List<string> GetContractsToCheck()
         {
             var Offset = 0;
-
             SendRequest(Offset);
             if (DeserializedJson["next"] == null)
             {
@@ -54,8 +53,8 @@ namespace Cappario
                 }
                 while (DeserializedJson["next"] != null)
                 {
-                    SendRequest(Offset);
                     Offset += 100;
+                    SendRequest(Offset);
                     var ContractsInPage = DeserializedJson["contracts"].Count;
                     for (int e = 0; e < ContractsInPage; e++)
                     {
