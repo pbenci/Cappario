@@ -33,16 +33,35 @@ namespace Cappario
         public List<string> GetContractsToCheck()
         {
             var Offset = 0;
+
             SendRequest(Offset);
-            while (DeserializedJson["next"] != null)
+            if (DeserializedJson["next"] == null)
             {
-                SendRequest(Offset);
-                Offset+=100;
-                var contracts = DeserializedJson["contracts"].Count;
-                for (int e = 0; e < contracts; e++)
+                var Contracts = DeserializedJson["contracts"].Count;
+                for (int e = 0; e < Contracts; e++)
                 {
                     ListOfIdOfContractsToCheck.Add(Convert.ToString(DeserializedJson["contracts"][e]["id"]));
                     Console.WriteLine("Added contract " + DeserializedJson["contracts"][e]["code"] + " to the list of contracts that must be checked");
+                }
+            }
+            else
+            {
+                var Contracts = DeserializedJson["contracts"].Count;
+                for (int e = 0; e < Contracts; e++)
+                {
+                    ListOfIdOfContractsToCheck.Add(Convert.ToString(DeserializedJson["contracts"][e]["id"]));
+                    Console.WriteLine("Added contract " + DeserializedJson["contracts"][e]["code"] + " to the list of contracts that must be checked");
+                }
+                while (DeserializedJson["next"] != null)
+                {
+                    SendRequest(Offset);
+                    Offset += 100;
+                    var ContractsInPage = DeserializedJson["contracts"].Count;
+                    for (int e = 0; e < ContractsInPage; e++)
+                    {
+                        ListOfIdOfContractsToCheck.Add(Convert.ToString(DeserializedJson["contracts"][e]["id"]));
+                        Console.WriteLine("Added contract " + DeserializedJson["contracts"][e]["code"] + " to the list of contracts that must be checked");
+                    }
                 }
             }
             return ListOfIdOfContractsToCheck;
