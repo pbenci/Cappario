@@ -39,8 +39,11 @@ namespace Cappario
                 var Contracts = DeserializedJson["contracts"].Count;
                 for (int e = 0; e < Contracts; e++)
                 {
-                    ListOfIdOfContractsToCheck.Add(Convert.ToString(DeserializedJson["contracts"][e]["id"]));
-                    Console.WriteLine("Added contract " + DeserializedJson["contracts"][e]["code"] + " to the list of contracts that must be checked");
+                    if(DeserializedJson["contracts"][e]["branch"]["code"] != "801")
+                    {
+                        ListOfIdOfContractsToCheck.Add(Convert.ToString(DeserializedJson["contracts"][e]["id"]));
+                        Console.WriteLine("Added contract " + DeserializedJson["contracts"][e]["code"] + " to the list of contracts that must be checked");
+                    }
                 }
             }
             else
@@ -48,8 +51,11 @@ namespace Cappario
                 var Contracts = DeserializedJson["contracts"].Count;
                 for (int e = 0; e < Contracts; e++)
                 {
-                    ListOfIdOfContractsToCheck.Add(Convert.ToString(DeserializedJson["contracts"][e]["id"]));
-                    Console.WriteLine("Added contract " + DeserializedJson["contracts"][e]["code"] + " to the list of contracts that must be checked");
+                    if (DeserializedJson["contracts"][e]["branch"]["code"] != "801")
+                    {
+                        ListOfIdOfContractsToCheck.Add(Convert.ToString(DeserializedJson["contracts"][e]["id"]));
+                        Console.WriteLine("Added contract " + DeserializedJson["contracts"][e]["code"] + " to the list of contracts that must be checked");
+                    }
                 }
                 while (DeserializedJson["next"] != null)
                 {
@@ -58,8 +64,11 @@ namespace Cappario
                     var ContractsInPage = DeserializedJson["contracts"].Count;
                     for (int e = 0; e < ContractsInPage; e++)
                     {
-                        ListOfIdOfContractsToCheck.Add(Convert.ToString(DeserializedJson["contracts"][e]["id"]));
-                        Console.WriteLine("Added contract " + DeserializedJson["contracts"][e]["code"] + " to the list of contracts that must be checked");
+                        if (DeserializedJson["contracts"][e]["branch"]["code"] != "801")
+                        {
+                            ListOfIdOfContractsToCheck.Add(Convert.ToString(DeserializedJson["contracts"][e]["id"]));
+                            Console.WriteLine("Added contract " + DeserializedJson["contracts"][e]["code"] + " to the list of contracts that must be checked");
+                        }
                     }
                 }
             }
