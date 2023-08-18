@@ -37,7 +37,14 @@ namespace Cappario
             {
                 foreach (Contract Contract in GetIntegrationContractsRequest.ListOfCodeOfContractsThatNeedBranchChange)
                 {
-                    Results.Log($"The contract {Contract.Code} for customer {Contract.CustomerName} should be switched from {Contract.CurrentBranch} to {Contract.RightFiscalBranch}");
+                    if (Contract.RightFiscalBranch == null)
+                    {
+                        Results.Log($"The contract {Contract.Code} for customer {Contract.CustomerName} has a Zipcode not found in the Cappario.xlsx");
+                    }
+                    else
+                    {
+                        Results.Log($"The contract {Contract.Code} for customer {Contract.CustomerName} should be switched from {Contract.CurrentBranch} to {Contract.RightFiscalBranch}");
+                    }
                 }
             }
         }
