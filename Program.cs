@@ -15,11 +15,9 @@ namespace Cappario
             PostAuthRequest.GetToken();
             var GetIntegrationContractsRequest = new GetIntegrationContractsRequest(PostAuthRequest.Token);
             GetIntegrationContractsRequest.GetContractsToCheck();
-            var GetContractsRequest = new GetContractsRequest(PostAuthRequest.Token, GetIntegrationContractsRequest.ListOfIdOfContractsToCheck);
-            GetContractsRequest.GetCodeOfContractsThatNeedBranchChange();
             if (bool.Parse(ConfigurationManager.AppSettings.Get("ModifyContract")))
             {
-                Parallel.ForEach(GetContractsRequest.ListOfCodeOfContractsThatNeedBranchChange, new ParallelOptions { MaxDegreeOfParallelism = 4 }, Contract =>
+                Parallel.ForEach(GetIntegrationContractsRequest.ListOfCodeOfContractsThatNeedBranchChange, new ParallelOptions { MaxDegreeOfParallelism = 4 }, Contract =>
                 {
                     IWebDriver Driver = new Browsers().LaunchChrome();
                     Driver.Manage().Window.Maximize();
@@ -37,7 +35,7 @@ namespace Cappario
             }
             else
             {
-                foreach (Contract Contract in GetContractsRequest.ListOfCodeOfContractsThatNeedBranchChange)
+                foreach (Contract Contract in GetIntegrationContractsRequest.ListOfCodeOfContractsThatNeedBranchChange)
                 {
                     Results.Log($"The contract {Contract.Code} for customer {Contract.CustomerName} should be switched from {Contract.CurrentBranch} to {Contract.RightFiscalBranch}");
                 }
