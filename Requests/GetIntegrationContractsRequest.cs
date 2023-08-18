@@ -62,7 +62,7 @@ namespace Cappario
                 var Contracts = DeserializedJson["contracts"].Count;
                 for (int e = 0; e < Contracts; e++)
                 {
-                    if (DeserializedJson["contracts"][e]["branch"]["code"] != "801" && Excel.GetRightBranchFromZipCode(Rx.Match(DeserializedJson["contracts"][e]["jobsite"]["address"].ToString()).Value) != DeserializedJson["contracts"][e]["branch"]["code"].ToString())
+                    if (DeserializedJson["contracts"][e]["branch"]["code"] != "801" && Excel.GetRightBranchFromZipCode(Rx.Match(DeserializedJson["contracts"][e]["jobsite"]["address"].ToString()).Value) != Excel.GetRightBranchFromCode(DeserializedJson["contracts"][e]["branch"]["id"].ToString()))
                     {
                         Contract Contract = new(
                             DeserializedJson["contracts"][e]["code"].ToString(),
@@ -82,7 +82,7 @@ namespace Cappario
                     var ContractsInPage = DeserializedJson["contracts"].Count;
                     for (int e = 0; e < ContractsInPage; e++)
                     {
-                        if (DeserializedJson["contracts"][e]["branch"]["code"] != "801" && Excel.GetRightBranchFromZipCode(Rx.Match(DeserializedJson["contracts"][e]["jobsite"]["address"].ToString()).Value) != DeserializedJson["contracts"][e]["branch"]["code"].ToString())
+                        if (DeserializedJson["contracts"][e]["branch"]["code"] != "801" && Excel.GetRightBranchFromZipCode(Rx.Match(DeserializedJson["contracts"][e]["jobsite"]["address"].ToString()).Value) != Excel.GetRightBranchFromCode(DeserializedJson["contracts"][e]["branch"]["id"].ToString()))
                         {
                             Contract Contract = new(
                                 DeserializedJson["contracts"][e]["code"].ToString(),
