@@ -71,6 +71,9 @@ Numero di giorni tolti dalla data di oggi che il Cappario utilizza per filtrare 
 ### File con CAP e filiali collegate
 Nella stessa cartella dove c'è il file Cappario.exe ci deve essere un file excel chiamato Cappario.xlsx con tutti i codici postali e la loro filiale collegata.
 
+### File con filiali ed il loro id
+Nella stessa cartella dove c'è il file Cappario.exe ci deve essere un file excel chiamato Branches.xlsx con tutte le branch ed i loro id di CDRS in ordine crescente
+
 ### ChromeDriver
 Nella stessa cartella dove c'è il file Cappario.exe ci deve essere anche l’eseguibile Chromedriver.exe. Il file può essere scaricato a questo indirizzo https://chromedriver.chromium.org/downloads 
 
