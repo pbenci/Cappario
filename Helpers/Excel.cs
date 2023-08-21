@@ -12,7 +12,7 @@ namespace Cappario
             string FilePath = AppDomain.CurrentDomain.BaseDirectory + @"\Cappario.xlsx";
             Workbook wb = ExcelApp.Workbooks.Open(FilePath);
             Worksheet ws = (Worksheet)wb.Worksheets[1];
-            var Range = ExcelApp.Range["C:C"];
+            var Range = ExcelApp.Range["B:B"];
             try
             {
                 var RowNumber = Range.Find(ZipCode).Row;
@@ -25,20 +25,20 @@ namespace Cappario
             }
         }
 
-        public static string GetRightBranchFromCode(string Code)
+        public static string GetRightBranchFromId(string Id)
         {
-            string FilePath = AppDomain.CurrentDomain.BaseDirectory + @"\Cappario.xlsx";
+            string FilePath = AppDomain.CurrentDomain.BaseDirectory + @"\Branches.xlsx";
             Workbook wb = ExcelApp.Workbooks.Open(FilePath);
             Worksheet ws = (Worksheet)wb.Worksheets[1];
             var Range = ExcelApp.Range["B:B"];
             try
             {
-                var RowNumber = Range.Find(Code).Row;
+                var RowNumber = Range.Find(Id).Row;
                 return Convert.ToString(ws.Cells[RowNumber, 1].Value);
             }
             catch (NullReferenceException)
             {
-                Results.Log("The ZIP code" + " " + Code + " " + "isn't in the Cappario.xlsx file");
+                Results.Log("The branch with id" + " " + Id + " " + "isn't in the Cappario.xlsx file");
                 return null;
             }
         }
