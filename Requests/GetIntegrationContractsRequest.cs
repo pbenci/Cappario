@@ -43,16 +43,19 @@ namespace Cappario
                 var Contracts = DeserializedJson["contracts"].Count;
                 for (int e = 0; e < Contracts; e++)
                 {
-                    if (DeserializedJson["contracts"][e]["branch"]["code"] != "801" && Excel.GetRightBranchFromZipCode(Rx.Match(DeserializedJson["contracts"][e]["jobsite"]["address"].ToString()).Value) != DeserializedJson["contracts"][e]["branch"]["code"].ToString())
+                    if (DeserializedJson["contracts"][e]["branch"]["code"] != "801")
                     {
                         Contract Contract = new(
                             DeserializedJson["contracts"][e]["code"].ToString(),
                             Excel.GetRightBranchFromZipCode(Rx.Match(DeserializedJson["contracts"][e]["jobsite"]["address"].ToString()).Value),
                             DeserializedJson["contracts"][e]["customer"]["code"].ToString(),
                             DeserializedJson["contracts"][e]["customer"]["name"].ToString(),
-                            Excel.GetRightBranchFromId(DeserializedJson["contracts"][e]["branch"]["id"].ToString())
+                            Excel.GetRightBranchFromId(DeserializedJson["contracts"][e]["branch"]["code"].ToString())
                         );
-                        ListOfCodeOfContractsThatNeedBranchChange.Add(Contract);
+                        if (Contract.RightFiscalBranch != Contract.CurrentBranch)
+                        {
+                            ListOfCodeOfContractsThatNeedBranchChange.Add(Contract);
+                        }
                     }
                     Console.WriteLine("Checked contract" + " " + DeserializedJson["contracts"][e]["code"]);
                 }
@@ -62,16 +65,19 @@ namespace Cappario
                 var Contracts = DeserializedJson["contracts"].Count;
                 for (int e = 0; e < Contracts; e++)
                 {
-                    if (DeserializedJson["contracts"][e]["branch"]["code"] != "801" && Excel.GetRightBranchFromZipCode(Rx.Match(DeserializedJson["contracts"][e]["jobsite"]["address"].ToString()).Value) != Excel.GetRightBranchFromId(DeserializedJson["contracts"][e]["branch"]["id"].ToString()))
+                    if (DeserializedJson["contracts"][e]["branch"]["code"] != "801" && Excel.GetRightBranchFromZipCode(Rx.Match(DeserializedJson["contracts"][e]["jobsite"]["address"].ToString()).Value) != Excel.GetRightBranchFromId(DeserializedJson["contracts"][e]["branch"]["code"].ToString()))
                     {
                         Contract Contract = new(
                             DeserializedJson["contracts"][e]["code"].ToString(),
                             Excel.GetRightBranchFromZipCode(Rx.Match(DeserializedJson["contracts"][e]["jobsite"]["address"].ToString()).Value),
                             DeserializedJson["contracts"][e]["customer"]["code"].ToString(),
                             DeserializedJson["contracts"][e]["customer"]["name"].ToString(),
-                            Excel.GetRightBranchFromId(DeserializedJson["contracts"][e]["branch"]["id"].ToString())
+                            Excel.GetRightBranchFromId(DeserializedJson["contracts"][e]["branch"]["code"].ToString())
                         );
-                        ListOfCodeOfContractsThatNeedBranchChange.Add(Contract);
+                        if (Contract.RightFiscalBranch != Contract.CurrentBranch)
+                        {
+                            ListOfCodeOfContractsThatNeedBranchChange.Add(Contract);
+                        }
                     }
                     Console.WriteLine("Checked contract" + " " + DeserializedJson["contracts"][e]["code"]);
                 }
@@ -82,16 +88,19 @@ namespace Cappario
                     var ContractsInPage = DeserializedJson["contracts"].Count;
                     for (int e = 0; e < ContractsInPage; e++)
                     {
-                        if (DeserializedJson["contracts"][e]["branch"]["code"] != "801" && Excel.GetRightBranchFromZipCode(Rx.Match(DeserializedJson["contracts"][e]["jobsite"]["address"].ToString()).Value) != Excel.GetRightBranchFromId(DeserializedJson["contracts"][e]["branch"]["id"].ToString()))
+                        if (DeserializedJson["contracts"][e]["branch"]["code"] != "801" && Excel.GetRightBranchFromZipCode(Rx.Match(DeserializedJson["contracts"][e]["jobsite"]["address"].ToString()).Value) != Excel.GetRightBranchFromId(DeserializedJson["contracts"][e]["branch"]["code"].ToString()))
                         {
                             Contract Contract = new(
                                 DeserializedJson["contracts"][e]["code"].ToString(),
                                 Excel.GetRightBranchFromZipCode(Rx.Match(DeserializedJson["contracts"][e]["jobsite"]["address"].ToString()).Value),
                                 DeserializedJson["contracts"][e]["customer"]["code"].ToString(),
                                 DeserializedJson["contracts"][e]["customer"]["name"].ToString(),
-                                Excel.GetRightBranchFromId(DeserializedJson["contracts"][e]["branch"]["id"].ToString())
+                                Excel.GetRightBranchFromId(DeserializedJson["contracts"][e]["branch"]["code"].ToString())
                             );
-                            ListOfCodeOfContractsThatNeedBranchChange.Add(Contract);
+                            if (Contract.RightFiscalBranch != Contract.CurrentBranch)
+                            {
+                                ListOfCodeOfContractsThatNeedBranchChange.Add(Contract);
+                            }
                         }
                         Console.WriteLine("Checked contract" + " " + DeserializedJson["contracts"][e]["code"]);
                     }
